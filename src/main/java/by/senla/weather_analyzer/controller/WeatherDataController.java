@@ -1,11 +1,13 @@
 package by.senla.weather_analyzer.controller;
 
+import by.senla.weather_analyzer.dto.AverageTemperatureDTO;
 import by.senla.weather_analyzer.dto.WeatherDataDTO;
 import by.senla.weather_analyzer.model.WeatherData;
 import by.senla.weather_analyzer.service.WeatherDataService;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,9 +25,17 @@ public class WeatherDataController {
 
     @GetMapping("/latestData")
     public WeatherDataDTO getLatestData() {
-        WeatherData weatherData = weatherDataService.getLatestData();
+        WeatherData weatherData = weatherDataService.findLatestData();
 
         return convertToWeatherDataDTO(weatherData);
+    }
+
+    @GetMapping("/averageTemperature")
+    public AverageTemperatureDTO getAverageTemperature(@RequestParam("startDate") String startDate,
+                                                       @RequestParam("endDate") String endDate) {
+
+        return new AverageTemperatureDTO(startDate, endDate,
+                weatherDataService.calculateAverageTemperature(startDate, endDate));
     }
 
     private WeatherDataDTO convertToWeatherDataDTO(WeatherData weatherData) {
