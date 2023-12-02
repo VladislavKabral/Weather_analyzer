@@ -1,5 +1,7 @@
 package by.senla.weather_analyzer.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import by.senla.weather_analyzer.model.WeatherReaderTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +20,8 @@ public class WeatherReaderService {
 
     private final WeatherReaderTask weatherReaderTask;
 
+    private static final Logger LOGGER = LogManager.getLogger(WeatherReaderService.class);
+
     @Autowired
     public WeatherReaderService(WeatherReaderTask weatherReaderTask) {
         this.weatherReaderTask = weatherReaderTask;
@@ -27,5 +31,6 @@ public class WeatherReaderService {
     public void run() {
         Timer timer = new Timer(true);
         timer.scheduleAtFixedRate(weatherReaderTask, timerDelay, timerPeriod);
+        LOGGER.info("Times is working");
     }
 }
