@@ -1,5 +1,7 @@
 package by.senla.weather_analyzer.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import by.senla.weather_analyzer.service.WeatherDataService;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -54,6 +56,8 @@ public class WeatherReaderTask extends TimerTask {
 
     private final WeatherDataService weatherDataService;
 
+    private static final Logger LOGGER = LogManager.getLogger(WeatherReaderTask.class);
+
     @Autowired
     public WeatherReaderTask(WeatherDataService weatherDataService) {
         this.weatherDataService = weatherDataService;
@@ -62,7 +66,9 @@ public class WeatherReaderTask extends TimerTask {
     @Override
     public void run() {
         try {
+            LOGGER.info("Start reading data from API");
             getWeatherFromAPI();
+            LOGGER.info("End reading data from API");
         } catch (ParseException | IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -96,5 +102,6 @@ public class WeatherReaderTask extends TimerTask {
         weatherData.setWeatherDate(new Date());
 
         weatherDataService.save(weatherData);
+        LOGGER.info("New data saved to database");
     }
 }

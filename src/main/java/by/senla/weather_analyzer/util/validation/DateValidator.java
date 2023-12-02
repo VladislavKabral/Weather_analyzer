@@ -1,7 +1,8 @@
 package by.senla.weather_analyzer.util.validation;
 
 import org.springframework.stereotype.Component;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +18,8 @@ public class DateValidator {
 
     private static final int PLACE_OF_YEAR = 1;
 
+    private static final Logger LOGGER = LogManager.getLogger(DateValidator.class);
+
     private final Pattern pattern;
 
     public DateValidator() {
@@ -24,6 +27,7 @@ public class DateValidator {
     }
 
     public boolean validate(String data) {
+        LOGGER.debug("Start validate date " + data);
         Matcher matcher = pattern.matcher(data);
 
         if (matcher.matches()) {
@@ -55,6 +59,7 @@ public class DateValidator {
                 }
             }
         }
+        LOGGER.debug("Date " + data + " is correct");
         return true;
     }
 }
