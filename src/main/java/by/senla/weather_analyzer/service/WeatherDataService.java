@@ -17,6 +17,10 @@ public class WeatherDataService {
         this.weatherDataRepository = weatherDataRepository;
     }
 
+    public WeatherData getLatestData() {
+        return weatherDataRepository.findFirstByOrderByIdDesc();
+    }
+
     @Transactional
     public void save(WeatherData weatherData) {
         weatherDataRepository.save(weatherData);
