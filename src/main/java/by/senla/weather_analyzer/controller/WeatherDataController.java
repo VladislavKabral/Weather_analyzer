@@ -1,5 +1,6 @@
 package by.senla.weather_analyzer.controller;
 
+import by.senla.weather_analyzer.util.exception.WrongDateException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import by.senla.weather_analyzer.dto.AverageTemperatureDTO;
@@ -45,7 +46,7 @@ public class WeatherDataController {
     @PostMapping("/averageTemperature")
     public ResponseEntity<AverageTemperatureDTO> getAverageTemperature(
             @RequestBody RequestForAverageTemperatureCalculationDTO request) throws EntityNotFoundException,
-            WrongDateFormatException {
+            WrongDateFormatException, WrongDateException {
 
         LOGGER.debug("Start of calculation average temperature");
         AverageTemperatureDTO averageTemperatureDTO = new AverageTemperatureDTO(request.getStartDate(), request.getEndDate(),
