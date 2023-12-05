@@ -1,5 +1,6 @@
 package by.senla.weather_analyzer.service;
 
+import by.senla.weather_analyzer.util.exception.WrongDateException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import by.senla.weather_analyzer.model.WeatherData;
@@ -58,7 +59,7 @@ public class WeatherDataService {
     }
 
     public double calculateAverageTemperature(String startDate, String endDate) throws EntityNotFoundException,
-            WrongDateFormatException {
+            WrongDateFormatException, WrongDateException {
 
         double averageTemperature = 0.0;
 
@@ -70,6 +71,11 @@ public class WeatherDataService {
         if (dateValidator.validate(endDate)) {
             LOGGER.error(endDate + "is wrong format of end date");
             throw new WrongDateFormatException("Wrong format of end date. Right format is 'yyyy-MM-dd'");
+        }
+
+        if (convertStringToDate(endDate).before(convertStringToDate(startDate))) {
+            LOGGER.error("End date is before start date");
+            throw new WrongDateException("End date is before start date");
         }
 
         LOGGER.info("Start and end dates are correct");
