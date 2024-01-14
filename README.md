@@ -17,7 +17,7 @@ Example of response:<br/>
     {<br/>
         "temperature": "-5.0", <br/>
         "windSpeed": "9.1", <br/>
-        "atmosphericPressure": "1007.1", <br/
+        "atmosphericPressure": "1007.1", <br/>
         "airHumidity": "89", <br/>
         "weatherConditions": "Mist", <br/>
         "weatherLocation": "Minsk", <br/>
